@@ -138,6 +138,30 @@
             <version>1.4</version>
             <type>jar</type>
         </dependency>
+        <!-- Kafka and Click house -->
+         <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.4.6</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -268,7 +292,7 @@
             <artifactId>xstream</artifactId>
             <version>1.4.20</version>
         </dependency>
-    </dependencies>
+            </dependencies>
 
     <profiles>
         <profile>

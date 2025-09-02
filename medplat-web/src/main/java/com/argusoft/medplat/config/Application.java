@@ -3,13 +3,17 @@ package com.argusoft.medplat.config;
 
 import com.argusoft.medplat.common.util.ConstantUtil;
 import com.argusoft.medplat.config.jackson.CustomSQLDateTimeSerializer;
+import com.argusoft.medplat.payload.User;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -24,6 +28,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -33,6 +40,8 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
 @EnableTransactionManagement
@@ -48,6 +57,7 @@ import javax.sql.DataSource;
 public class Application extends SpringBootServletInitializer {
 
     @Autowired
+    @Qualifier("postgresDataSource")
     private DataSource dataSource;
 
     @Override
@@ -184,4 +194,6 @@ public class Application extends SpringBootServletInitializer {
 //        }
 //        return null;
 //    }
+
 }
+

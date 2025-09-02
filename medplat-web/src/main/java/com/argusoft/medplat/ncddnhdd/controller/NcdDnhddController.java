@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.argusoft.medplat.ncddnhdd.controller;
+import com.argusoft.medplat.kafka.GenericKafkaProducer;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.argusoft.medplat.ncddnhdd.dto.*;
@@ -78,10 +79,13 @@ public class NcdDnhddController {
     public MemberDiseasesDto retrieveFirstRecordForDiseaseByMemberId(@RequestParam Integer memberId,@RequestParam(name = "diseaseCode", required = false) String diseaseCode) {
         return ncdDnhddService.retrieveFirstRecordForDiseaseByMemberId(memberId, diseaseCode);
     }
-
+    @Autowired
+    private GenericKafkaProducer genericKafkaProducer;
     @PostMapping(value = "/hypertension")
     public void saveHypertension(@RequestBody MemberHyperTensionDto hyperTensionDto) {
-        ncdDnhddService.saveHypertension(hyperTensionDto);
+        //kafka calling
+        genericKafkaProducer.send("hypertension_topic", hyperTensionDto);
+        //ncdDnhddService.saveHypertension(hyperTensionDto);
     }
 
     @PostMapping(value = "/diabetes")
