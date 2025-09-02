@@ -64,38 +64,38 @@ public class HypertensionIngestionHandler implements IngestionHandler<MemberHype
 
     public void processAndPersist(MemberHyperTensionDto detail) {
 
-        System.out.println("🔥 Simulating failure for retry test...");
-        throw new RuntimeException("Simulated failure for retry testing");
+        // System.out.println("🔥 Simulating failure for retry test...");
+        // throw new RuntimeException("Simulated failure for retry testing");
 
-//        try {
-//            // Extract values
-//            Integer memberId = detail.getMemberId();
-//            java.util.Date screeningDate = detail.getScreeningDate();
-//            Integer systolicBp = detail.getSystolicBloodPressure();
-//
-//
-//            // ✅ Save to PostgreSQL via service layer
-//            ncdDnhddService.saveHypertension(detail);
-//
-//            LOGGER.info("✅ Saved to PostgreSQL: memberId={}, screeningDate={}, systolicBp={}",
-//                    memberId, screeningDate);
-//
-//            // ✅ Save to ClickHouse
-//            String insertSql = "INSERT INTO testing.hypertension_data (memberId, screeningDate, systolicBp) VALUES (?, ?, ?)";
-//
-//            clickhouseJdbcTemplate.update(
-//                    insertSql,
-//                    memberId,
-//                    new Date(screeningDate.getTime()),
-//                    systolicBp
-//
-//            );
-//
-//            LOGGER.info("📊 Inserted into ClickHouse: memberId={}, screeningDate={}, systolicBp={}",
-//                    memberId, screeningDate);
-//        } catch (Exception e) {
-//            LOGGER.error("❌ Error during dual persistence (PostgreSQL + ClickHouse)", e);
-//        }
+       try {
+           // Extract values
+           Integer memberId = detail.getMemberId();
+           java.util.Date screeningDate = detail.getScreeningDate();
+           Integer systolicBp = detail.getSystolicBloodPressure();
+
+
+           // ✅ Save to PostgreSQL via service layer
+           ncdDnhddService.saveHypertension(detail);
+
+           LOGGER.info("✅ Saved to PostgreSQL: memberId={}, screeningDate={}, systolicBp={}",
+                   memberId, screeningDate);
+
+           // ✅ Save to ClickHouse
+           String insertSql = "INSERT INTO testing.hypertension_data (memberId, screeningDate, systolicBp) VALUES (?, ?, ?)";
+
+           clickhouseJdbcTemplate.update(
+                   insertSql,
+                   memberId,
+                   new Date(screeningDate.getTime()),
+                   systolicBp
+
+           );
+
+           LOGGER.info("📊 Inserted into ClickHouse: memberId={}, screeningDate={}, systolicBp={}",
+                   memberId, screeningDate);
+       } catch (Exception e) {
+           LOGGER.error("❌ Error during dual persistence (PostgreSQL + ClickHouse)", e);
+       }
     }
 
 
